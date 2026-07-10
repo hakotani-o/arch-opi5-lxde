@@ -2,8 +2,6 @@
 set -eE 
 trap 'echo Error: in $0 on line $LINENO' ERR
 
-set -x
-
 cleanup_loopdev() {
     local loop="$1"
 
