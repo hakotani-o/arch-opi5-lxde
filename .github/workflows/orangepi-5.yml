@@ -36,9 +36,9 @@ jobs:
         id: date
         run: echo "now=$(date +'%Y-%m-%d %H:%M')" >> $GITHUB_OUTPUT
 
-      - name: Get kernel version
-        id: kernel
-        run: cat kernel_version >> $GITHUB_OUTPUT
+#      - name: Get kernel version
+#        id: kernel
+#        run: cat kernel_version >> $GITHUB_OUTPUT
         
 # 旧: upload-artifact のステップをコメントアウトまたは削除し、以下を追加
       - name: Create Release and Upload
