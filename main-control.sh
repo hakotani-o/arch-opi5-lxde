@@ -2,7 +2,7 @@
 set -eE
 
 #	sudo rm -rf ./mnt Arch-linux-aarch64-orangepi-5-2026*.img arch-linux.rootfs.tar.gz
-#	./das-u-boot.sh orangepi-5-rk3588s_defconfig
+	./das-u-boot.sh orangepi-5-rk3588s_defconfig
 	./pacstrap.sh 
 	sudo ./lxdm-setup.sh
 	sudo ./disk_image.sh orangepi-5 rk3588s-orangepi-5
