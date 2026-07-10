@@ -8,7 +8,7 @@ sudo apt install arch-install-scripts archlinux-keyring libalpm13t64 pacman-pack
 #sudo cp  -a keyrings /usr/share/
 #sudo cp  etc/pacman.d/mirrorlist /etc/pacman.d
 #sudo cp etc/pacman.conf /etc
-#sudo sudo pacman-key --populate archlinuxarm
+sudo sudo pacman-key --populate archlinuxarm
 sudo pacman -Sy --noconfirm archlinuxarm-keyring
 sudo pacman -Syyu
 
