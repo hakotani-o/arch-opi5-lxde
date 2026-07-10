@@ -23,12 +23,12 @@ EOF
 cat << 'EOF' > ./mnt/usr/local/bin/gui-wizard.sh
 #!/bin/bash
 
-NEW_USER=$(zenity --entry --title="Initial Setup" --text="新しい一般ユーザー名>>を入力してください:" --width=400)
+NEW_USER=$(zenity --entry --title="Initial Setup" --text="新しい一般ユーザー名を入力してください:" --width=400)
 [ -z "$NEW_USER" ] && reboot
 
 while true; do
-    PASS1=$(zenity --password --title="Initial Setup" --text="パスワードを設定>>してください:")
-    PASS2=$(zenity --password --title="Initial Setup" --text="もう一度パスワー>>ドを入力してください:")
+    PASS1=$(zenity --password --title="Initial Setup" --text="パスワードを設定してください:")
+    PASS2=$(zenity --password --title="Initial Setup" --text="もう一度パスワードを入力してください:")
     if [ "$PASS1" = "$PASS2" ] && [ ! -z "$PASS1" ]; then
         break
     fi
@@ -36,12 +36,13 @@ while true; do
 い。"
 done
 
-sudo useradd -m -s /bin/bash -G sudo,video,audio "$NEW_USER"
+sudo useradd -m -s /bin/bash -G wheel,video,users "$NEW_USER"
 echo "$NEW_USER:$PASS1" | sudo chpasswd
 
 sudo rm -f /etc/xdg/autostart/first-boot-wizard.desktop
 
 sudo sed -i 's/autologin=setupadmin/# autologin=dgod/' /etc/lxdm/lxdm.conf
+sudo rm /etc/sudoers.d/setupadmin
 
 zenity --info --text="設定が完了しました。システムを再起動します。" --width=300
 sudo reboot
@@ -69,3 +70,4 @@ EOF4
 # chromium
 mkdir -p ./mnt/etc/chromium.d/
 echo 'export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-features=AcceleratedVideoDecoder,V4l2VideoDecode --disable-features=UseChromeOSDirectVideoDecoder"' > ./mnt/etc/chromium.d/opi5-v4l2
+
