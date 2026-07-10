@@ -184,7 +184,7 @@ mount proc-live -t proc "$mountpoint/proc"
 mount sysfs-live -t sysfs "$mountpoint/sys"
 mount securityfs -t securityfs "$mountpoint/sys/kernel/security"
 
-# lightDM
+# lxdm
 chroot ${mount_point}/writable/ /bin/bash -c "sudo systemctl enable lxdm
 # サービスの有効化
 systemctl enable firstboot-growroot.service
@@ -197,7 +197,7 @@ chroot ${mount_point}/writable/ /bin/bash -c "sudo useradd -m -G wheel,users,vid
 sed -i 's/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/' ${mount_point}/writable/etc/sudoers
 echo 'setupadmin ALL=(ALL) NOPASSWD: ALL' >> ${mount_point}/writable/etc/sudoers
 #echo "setupadmin PASSWD"
-chroot ${mount_point}/writable/ passwd setupadmin
+#chroot ${mount_point}/writable/ passwd setupadmin
 
 # u-boot-update 
 chroot ${mount_point}/writable/ /bin/bash -c "/usr/local/bin/generate-extlinux.sh&&sync"
