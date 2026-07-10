@@ -185,11 +185,12 @@ mount proc-live -t proc "$mountpoint/proc"
 mount sysfs-live -t sysfs "$mountpoint/sys"
 mount securityfs -t securityfs "$mountpoint/sys/kernel/security"
 
-# lightDM
+# lxdm
 chroot ${mount_point}/writable/ /bin/bash -c "sudo systemctl enable lxdm
 # サービスの有効化
 systemctl enable firstboot-growroot.service
 systemctl enable NetworkManager.service
+systemctl enable systemd-timesyncd.service
 "
 # ====================================================================================
 
