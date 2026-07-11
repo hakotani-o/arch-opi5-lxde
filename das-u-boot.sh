@@ -5,7 +5,7 @@ sudo apt-get update && sudo apt-get -y install  build-essential gcc-aarch64-linu
 qemu-user-static qemu-system-arm qemu-efi-aarch64 binfmt-support \
 debootstrap flex libssl-dev bc rsync kmod cpio xz-utils fakeroot parted \
 udev dosfstools uuid-runtime git-lfs device-tree-compiler python3 \
-python-is-python3 fdisk debhelper python3-pyelftools python3-setuptools \
+python-is-python3 fdisk bc debhelper python3-pyelftools python3-setuptools \
 python3-pkg-resources swig libfdt-dev libpython3-dev gawk \
 git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex \
 libelf-dev bison libgnutls28-dev libdw-dev
