@@ -68,6 +68,5 @@ WantedBy=multi-user.target
 EOF4
 
 # chromium
-mkdir -p ./mnt/etc/chromium.d/
-echo 'export CHROMIUM_FLAGS="$CHROMIUM_FLAGS --enable-features=AcceleratedVideoDecoder,V4l2VideoDecode --disable-features=UseChromeOSDirectVideoDecoder"' > ./mnt/etc/chromium.d/opi5-v4l2
-
+mkdir -p ./mnt/etc/chromium
+echo 'CHROMIUM_FLAGS="--enable-features=AcceleratedVideoDecoder,V4l2VideoDecode --disable-features=UseChromeOSDirectVideoDecoder"' > ./mnt/etc/chromium/default
