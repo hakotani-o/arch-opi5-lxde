@@ -1,6 +1,5 @@
 #!/bin/bash
 set -eE
-set -x
 
 sudo apt install arch-install-scripts archlinux-keyring libalpm13t64 pacman-package-manager libarchive-tools
 sudo pacman-key --init
