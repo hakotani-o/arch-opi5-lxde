@@ -14,4 +14,4 @@ mkdir mnt
 #sudo pacstrap ./mnt  base vim base-devel sudo linux-aarch64 linux-firmware xorg lxde networkmanager network-manager-applet ttf-dejavu noto-fonts-cjk pulseaudio alsa-utils pavucontrol zenity  cloud-guest-utils e2fsprogs gvfs udisks2 gst-plugins-base gst-plugins-base-libs gst-plugins-good gst-plugins-bad clapper mpv vulkan-tools mesa-utils
 sudo pacstrap ./mnt base vim sudo xorg lxde networkmanager network-manager-applet ttf-dejavu noto-fonts-cjk pipewire-pulse alsa-utils pavucontrol zenity cloud-guest-utils e2fsprogs gvfs udisks2 clapper mpv vulkan-tools mesa-utils
 # キャッシュクリア
-sudo pacman -cc --root ./mnt --noconfirm
+sudo pacman -Scc --root ./mnt --noconfirm
