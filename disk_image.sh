@@ -46,10 +46,10 @@ export  LANG=C
 
 sudo apt-get update && sudo apt-get -y install uuid-runtime 
 
-rootfs="./Arch-linux.rootfs.tar.gz"
-cd mnt
-sudo bsdtar -zcf ../$rootfs --xattrs ./*
-cd ..
+rootfs="./base_camp/Arch-linux.rootfs.tar.gz"
+#cd mnt
+#sudo bsdtar -zcf ../$rootfs --xattrs ./*
+#cd ..
 rootfs="$(readlink -f "$rootfs")"
 if [[ "$(basename "${rootfs}")" != *".rootfs.tar.gz" || ! -e "${rootfs}" ]]; then
     echo "Error: $(basename "${rootfs}") must be a rootfs tarfile"
@@ -222,7 +222,7 @@ losetup -d "${loop}"
 
 # Exit trap is no longer needed
 echo -e "\nCompressing $(basename "${img}.xz")\n"
-xz -v -9 -T0 "${img}"
+#xz -v -9 -T0 "${img}"
 #rm "${img}"
 #cd ./images && sha256sum "$(basename "${img}.xz")" > "$(basename "${img}.xz.sha256")"
 exit 0
