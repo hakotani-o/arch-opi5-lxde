@@ -17,4 +17,4 @@ mkdir mnt
 sudo pacstrap ./mnt base linux-aarch64 linux-firmware vim sudo
 sudo pacman -S --noconfirm --root ./mnt xorg lxde networkmanager network-manager-applet ttf-dejavu noto-fonts-cjk pulseaudio alsa-utils pavucontrol zenity cloud-guest-utils e2fsprogs gvfs udisks2 clapper mpv vulkan-tools mesa-utils
 # キャッシュクリア
-sudo pacman -Scc --root ./mnt --noconfirm
+yes|sudo pacman -Scc --root ./mnt
