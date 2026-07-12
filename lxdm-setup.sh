@@ -43,7 +43,11 @@ sudo rm -f /etc/xdg/autostart/first-boot-wizard.desktop
 if [ -f /etc/mkinitcpio.conf.org ]; then
 	sudo cp /etc/mkinitcpio.conf.org /etc/mkinitcpio.conf
 	sudo rm /etc/mkinitcpio.conf.org
-	sudo mkinitcpio -P
+	sudo mkinitcpio -P | zenity --text-info \
+		--title="mkinitcpio 実行中" \
+		--width=600 \
+		--height=400 \
+		--auto-scroll
 fi
 sudo sed -i 's/autologin=setupadmin/# autologin=dgod/' /etc/lxdm/lxdm.conf
 sudo rm /etc/sudoers.d/setupadmin
