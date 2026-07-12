@@ -2,7 +2,7 @@
 set -eE
 
 mkdir -p ./mnt/usr/local/bin
-cp firstboot-growroot.sh ./mnt/usr/local/bin
+cp ./firstboot-growroot.sh ./mnt/usr/local/bin
 chmod +x ./mnt/usr/local/bin/firstboot-growroot.sh
 
 sed -i 's/# autologin=dgod/autologin=setupadmin/' ./mnt/etc/lxdm/lxdm.conf
@@ -40,7 +40,11 @@ sudo useradd -m -s /bin/bash -G wheel,video,users "$NEW_USER"
 echo "$NEW_USER:$PASS1" | sudo chpasswd
 
 sudo rm -f /etc/xdg/autostart/first-boot-wizard.desktop
-
+if [ -f /etc/mkinitcpio.conf.org ]; then
+	sudo cp /etc/mkinitcpio.conf.org /etc/mkinitcpio.conf
+	sudo rm /etc/mkinitcpio.conf.org
+	sudo mkinitcpio -P
+fi
 sudo sed -i 's/autologin=setupadmin/# autologin=dgod/' /etc/lxdm/lxdm.conf
 sudo rm /etc/sudoers.d/setupadmin
 

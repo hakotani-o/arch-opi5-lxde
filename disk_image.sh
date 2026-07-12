@@ -202,6 +202,7 @@ echo 'setupadmin ALL=(ALL) NOPASSWD: ALL' >> ${mount_point}/writable/etc/sudoers
 #chroot ${mount_point}/writable/ passwd setupadmin
 
 # GitHubビルド用に mkinitcpio.conf を調整 (autodetectの削除、SATAモジュールの強制追加)
+cp ${mount_point}/writable/etc/mkinitcpio.conf ${mount_point}/writable/etc/mkinitcpio.conf.org
 sed -i 's/^MODULES=(.*/MODULES=(ahci sd_mod nvme mmc_block ext4)/' ${mount_point}/writable/etc/mkinitcpio.conf
 sed -i 's/^HOOKS=(.*/HOOKS=(base systemd modconf kms keyboard sd-vconsole block filesystems fsck)/' ${mount_point}/writable/etc/mkinitcpio.conf
 
