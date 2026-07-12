@@ -202,7 +202,7 @@ echo 'setupadmin ALL=(ALL) NOPASSWD: ALL' >> ${mount_point}/writable/etc/sudoers
 #chroot ${mount_point}/writable/ passwd setupadmin
 
 # GitHubビルド用に mkinitcpio.conf を調整 (autodetectの削除、SATAモジュールの強制追加)
-sed -i 's/^MODULES=(.*/MODULES=(ahci sd_mod nvme ext4)/' ${mount_point}/writable/etc/mkinitcpio.conf
+sed -i 's/^MODULES=(.*/MODULES=(ahci sd_mod nvme mmc_block ext4)/' ${mount_point}/writable/etc/mkinitcpio.conf
 sed -i 's/^HOOKS=(.*/HOOKS=(base systemd modconf kms keyboard sd-vconsole block filesystems fsck)/' ${mount_point}/writable/etc/mkinitcpio.conf
 
 # その後、前述した通りchroot内で再ビルド
@@ -229,7 +229,7 @@ losetup -d "${loop}"
 
 # Exit trap is no longer needed
 echo -e "\nCompressing $(basename "${img}.xz")\n"
-xz -v -9 -T0 "${img}"
+#xz -v -9 -T0 "${img}"
 #rm "${img}"
 #cd ./images && sha256sum "$(basename "${img}.xz")" > "$(basename "${img}.xz.sha256")"
 exit 0
