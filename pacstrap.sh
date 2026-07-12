@@ -1,8 +1,7 @@
 #!/bin/bash
 set -eE
 
-# libalpm13t64
-sudo apt install arch-install-scripts archlinux-keyring  pacman-package-manager libarchive-tools  libalpm16
+sudo apt install arch-install-scripts archlinux-keyring pacman-package-manager libarchive-tools libalpm13t64
 sudo pacman-key --init
 sudo cp  etc/pacman.d/mirrorlist /etc/pacman.d
 sudo cp  -a keyrings /usr/share/
