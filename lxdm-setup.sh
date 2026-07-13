@@ -39,16 +39,41 @@ done
 sudo useradd -m -s /bin/bash -G wheel,video,users "$NEW_USER"
 echo "$NEW_USER:$PASS1" | sudo chpasswd
 
+# /etc/mkinitcpio.confをオリジナルに戻してmkinitcpioを実行
 sudo rm -f /etc/xdg/autostart/first-boot-wizard.desktop
-if [ -f /etc/mkinitcpio.conf.org ]; then
-	sudo cp /etc/mkinitcpio.conf.org /etc/mkinitcpio.conf
-	sudo rm /etc/mkinitcpio.conf.org
-	sudo mkinitcpio -P | zenity --text-info \
-		--title="mkinitcpio 実行中" \
-		--width=600 \
-		--height=400 \
-		--auto-scroll
+
+# 確実に対象ファイルが存在するかチェック（絶対パス）
+if [ -f "/etc/mkinitcpio.conf.org" ]; then
+    # オリジナル設定を復元して一時ファイルを削除
+    sudo cp /etc/mkinitcpio.conf.org /etc/mkinitcpio.conf
+    sudo rm -f /etc/mkinitcpio.conf.org
+
+    # 実機(Orange Pi 5 Plus)環境に合わせた autodetect 有りの爆速 initramfs を再生成
+    # ※zenityを別プロセスにせず、出力をそのまま流し込むか、一度ログに吐くと確実です
+    (
+        echo "# 復元された設定で initramfs を再構築中..."
+        echo "# これにより、実機(Orange Pi 5)に最適化された爆速ブートが有効になります。"
+        sudo mkinitcpio -P 2>&1
+        
+        # --- ここから検証用に追加 ---
+        echo ""
+        echo "# ========================================"
+        echo "# 【検証】再構築後の initramfs 内のドライバー一覧"
+        echo "# （不要なストレージドライバーが消えていれば最適化成功です）"
+        echo "# ========================================"
+        # 仕込み時の項目（ahci sd_mod nvme mmc_block ext4）をすべて網羅
+        lsinitcpio /boot/initramfs-linux.img | grep -E "ahci|sd_mod|nvme|mmc_block|ext4" 2>&1 || true
+        echo "# ========================================"
+        # ----------------------------
+
+        echo "# 再構築が完了しました！"
+    ) | zenity --text-info \
+        --title="システム最適化中 (mkinitcpio)" \
+        --width=600 \
+        --height=400 \
+        --auto-scroll
 fi
+
 sudo sed -i 's/autologin=setupadmin/# autologin=dgod/' /etc/lxdm/lxdm.conf
 sudo rm /etc/sudoers.d/setupadmin
 
