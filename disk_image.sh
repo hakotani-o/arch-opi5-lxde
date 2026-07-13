@@ -234,7 +234,7 @@ losetup -d "${loop}"
 
 # Exit trap is no longer needed
 echo -e "\nCompressing $(basename "${img}.xz")\n"
-#xz -v -9 -T0 "${img}"
+xz -v -9 -T0 "${img}"
 #rm "${img}"
 #cd ./images && sha256sum "$(basename "${img}.xz")" > "$(basename "${img}.xz.sha256")"
 exit 0
