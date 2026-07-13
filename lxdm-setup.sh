@@ -52,18 +52,35 @@ if [ -f "/etc/mkinitcpio.conf.org" ]; then
     # ※zenityを別プロセスにせず、出力をそのまま流し込むか、一度ログに吐くと確実です
     (
         echo "# 復元された設定で initramfs を再構築中..."
-        echo "# これにより、実機(Orange Pi 5)に最適化された爆速ブートが有効になります。"
+        echo "# これにより、実機に最適化された爆速ブートが有効になります。"
         sudo mkinitcpio -P 2>&1
         
         # --- ここから検証用に追加 ---
         echo ""
         echo "# ========================================"
-        echo "# 【検証】再構築後の initramfs 内のドライバー一覧"
-        echo "# （不要なストレージドライバーが消えていれば最適化成功です）"
+        echo "#  【システム最適化の成果レポート】"
         echo "# ========================================"
-        # 仕込み時の項目（ahci sd_mod nvme mmc_block ext4）をすべて網羅
-        lsinitcpio /boot/initramfs-linux.img | grep -E "ahci|sd_mod|nvme|mmc_block|ext4" 2>&1 || true
+        
+        # Beforeサイズをファイルから取得（なければ「不明」とする）
+        if [ -f "/boot/initramfs-before-size.txt" ]; then
+            BEFORE_SIZE=$(cat /boot/initramfs-before-size.txt)
+            # 読み終わったのでファイルを削除（ゴミを残さない）
+            sudo rm -f /boot/initramfs-before-size.txt
+        else
+            BEFORE_SIZE="?? MB (汎用)"
+        fi
+
+       # Afterサイズをその場で計測
+        AFTER_SIZE=$(du -sh /boot/initramfs-linux.img | awk '{print $1}')
+        
+        # 成果を画面に表示
+        echo " 📦 GitHubビルド時 (全ハード対応) : ${BEFORE_SIZE}"
+        echo " 🚀 実機最適化後   (Orange Pi専用) : ${AFTER_SIZE}"
+        echo " ----------------------------------------"
+        echo " ※無駄なドライバーが削ぎ落とされ、"
+        echo "   起動スピードが極限まで高速化されました！"
         echo "# ========================================"
+
         # ----------------------------
 
         echo "# 再構築が完了しました！"

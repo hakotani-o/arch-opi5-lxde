@@ -209,8 +209,12 @@ sed -i 's/^HOOKS=(.*/HOOKS=(base systemd modconf kms keyboard sd-vconsole block 
 # その後、前述した通りchroot内で再ビルド
 chroot ${mount_point}/writable/ /bin/bash -c "mkinitcpio -P && /usr/local/bin/generate-extlinux.sh && sync"
 
+# --- 【新規追加】GitHubビルド時のサイズ(Before)を記録 ---
+# 実機から見やすい場所にテキストとして保存します
+du -sh ${mount_point}/writable/boot/initramfs-linux.img | awk '{print $1}' > ${mount_point}/writable/boot/initramfs-before-size.txt
+
 # u-boot-update 
-chroot ${mount_point}/writable/ /bin/bash -c "/usr/local/bin/generate-extlinux.sh&&sync"
+#chroot ${mount_point}/writable/ /bin/bash -c "/usr/local/bin/generate-extlinux.sh&&sync"
 
 sync --file-system
 sync
@@ -230,7 +234,7 @@ losetup -d "${loop}"
 
 # Exit trap is no longer needed
 echo -e "\nCompressing $(basename "${img}.xz")\n"
-xz -v -9 -T0 "${img}"
+#xz -v -9 -T0 "${img}"
 #rm "${img}"
 #cd ./images && sha256sum "$(basename "${img}.xz")" > "$(basename "${img}.xz.sha256")"
 exit 0
